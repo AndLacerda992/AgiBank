@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: agibank_pesquisa.runner.AgibankRunner
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 18.48 s -- in agibank_pesquisa.runner.AgibankRunner
