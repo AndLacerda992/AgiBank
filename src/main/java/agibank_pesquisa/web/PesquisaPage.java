@@ -24,26 +24,18 @@ public class PesquisaPage extends PageObject {
         this.browser.navigate().to(URL_PRINCIPAL);
     }
 
-    /**
-     * Método simulado que não faz nada, pois vamos navegar diretamente pela URL
-     */
+  
     public void abriCampoDePesquisa() {
-        // Método intencionalmente vazio - vamos usar URLs diretas
     }
 
-    /**
-     * Armazena o termo de pesquisa para uso posterior
-     */
     public void escreverNoCampoPesquisa(String pesquisa) {
         this.termoPesquisa = pesquisa;
     }
 
-    /**
-     * Navega diretamente para a URL de pesquisa
-     */
+    
     public void clicarEmPesquisar() {
         this.browser.navigate().to(URL_PESQUISA + this.termoPesquisa);
-        // Aguarda a página carregar
+      
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -51,15 +43,11 @@ public class PesquisaPage extends PageObject {
         }
     }
 
-    /**
-     * Verifica se a página contém indicações de uma pesquisa vazia
-     */
+
     public boolean resultadoPesquisaDefault() {
-        // Verifica se a URL começa com a URL de pesquisa básica
         boolean urlCorreta = this.browser.getCurrentUrl().contains("?s=");
         
         try {
-            // Verifica se existe o título de resultados de pesquisa
             List<WebElement> headers = this.browser.findElements(By.tagName("h1"));
             boolean temTituloPesquisa = false;
             
@@ -75,27 +63,20 @@ public class PesquisaPage extends PageObject {
             
             return urlCorreta && temTituloPesquisa;
         } catch (Exception e) {
-            // Se houver qualquer erro, retornamos true se a URL estiver correta
+   
             return urlCorreta;
         }
     }
 
-    /**
-     * Verifica se a pesquisa com números tem resultados
-     */
+ 
     public boolean semResultadoParaPesquisa() {
-        // Verifica se a URL contém o termo de pesquisa numérico
         return this.browser.getCurrentUrl().contains("312321323123");
     }
 
-    /**
-     * Verifica se a página contém a mensagem "Nenhum resultado"
-     */
+   
     public boolean isSemResultadoDePesquisa() {
-        // Procura pelo texto "Nenhum resultado" ou similar em vários idiomas
         String pageSource = this.browser.getPageSource().toLowerCase();
         
-        // Expressões comuns para "nenhum resultado" em português e inglês
         return pageSource.contains("nenhum resultado") || 
                pageSource.contains("não encontramos nada") ||
                pageSource.contains("no results") ||
@@ -104,29 +85,27 @@ public class PesquisaPage extends PageObject {
                pageSource.contains("sem resultado");
     }
 
-    /**
-     * Verifica se a pesquisa por "instagram" tem resultados
-     */
+   
     public boolean pesquisaComResultado() {
         try {
-            // Verifica se a URL contém o termo "instagram"
+       
             boolean urlCorreta = this.browser.getCurrentUrl().contains("instagram");
             
-            // Verifica se tem pelo menos um resultado de postagem
+       
             List<WebElement> resultados = this.browser.findElements(By.tagName("article"));
             boolean temResultados = !resultados.isEmpty();
             
-            // Verificação adicional: se encontrar artigos, vamos procurar pelo termo Instagram no conteúdo
+            
             boolean temTermoNosResultados = false;
             if (temResultados) {
-                // Verificar se algum resultado contém o termo de pesquisa
+        
                 String pageSource = this.browser.getPageSource().toLowerCase();
                 temTermoNosResultados = pageSource.contains("instagram");
             }
             
             return urlCorreta && temResultados && temTermoNosResultados;
         } catch (Exception e) {
-            // Se houver qualquer erro, vamos verificar apenas se a URL parece correta
+       
             return this.browser.getCurrentUrl().contains("instagram");
         }
     }
